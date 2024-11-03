@@ -33,7 +33,7 @@ The project is implemented with a modular and scalable architecture:
 4. **Data Lake & Cataloging**: AWS Glue for data cataloging, AWS Athena for querying.
 5. **Dashboard**: Insights visualized in a custom dashboard.
 
-![Architecture Diagram Placeholder](images/architecture_diagram.png)
+![Architecture Diagram Placeholder](extras/architecture.jpeg)
 
 ## Technologies Used
 

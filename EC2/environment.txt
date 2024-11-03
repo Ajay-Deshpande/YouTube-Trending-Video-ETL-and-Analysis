@@ -1,0 +1,3 @@
+export DESTINATION_BUCKET="dataset-trending-youtube-video-statistics"
+export KAGGLE_KEY_BUCKET="ajay-deshpande-keys-and-configs"
+export KAGGLE_DATASET_NAME="datasnaek/youtube-new"
