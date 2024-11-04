@@ -1,0 +1,285 @@
+{
+	"jobConfig": {
+		"name": "SchemaNormalizerVideo",
+		"description": "",
+		"role": "arn:aws:iam::825765381477:role/service-role/AWSGlueServiceRole-WithS3",
+		"command": "glueetl",
+		"version": "4.0",
+		"runtime": null,
+		"workerType": "G.1X",
+		"numberOfWorkers": 10,
+		"maxCapacity": 10,
+		"jobRunQueuingEnabled": false,
+		"maxRetries": 0,
+		"timeout": 2880,
+		"maxConcurrentRuns": 1,
+		"security": "none",
+		"scriptName": ".py",
+		"scriptLocation": "s3://aws-glue-assets-825765381477-us-east-2/scripts/",
+		"language": "python-3",
+		"spark": true,
+		"sparkConfiguration": "standard",
+		"jobParameters": [],
+		"tags": [],
+		"jobMode": "DEVELOPER_MODE",
+		"createdOn": "2024-10-25T12:55:40.555Z",
+		"developerMode": true,
+		"connectionsList": [],
+		"temporaryDirectory": "s3://aws-glue-assets-825765381477-us-east-2/temporary/",
+		"logging": true,
+		"glueHiveMetastore": true,
+		"etlAutoTuning": true,
+		"metrics": true,
+		"observabilityMetrics": true,
+		"bookmark": "job-bookmark-disable",
+		"sparkPath": "s3://aws-glue-assets-825765381477-us-east-2/sparkHistoryLogs/",
+		"flexExecution": false,
+		"minFlexWorkers": null,
+		"maintenanceWindow": null
+	},
+	"dag": {
+		"node-1729860332427": {
+			"nodeId": "node-1729860332427",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1729859886996"
+			],
+			"name": "Amazon S3",
+			"generatedNodeName": "AmazonS3_node1729860332427",
+			"classification": "DataSink",
+			"type": "S3",
+			"streamingBatchInterval": 100,
+			"format": "glueparquet",
+			"compression": "snappy",
+			"path": "s3://dataset-trending-youtube-video-statistics/cleaned_video_data/",
+			"partitionKeys": [
+				"region"
+			],
+			"schemaChangePolicy": {
+				"enableUpdateCatalog": true,
+				"updateBehavior": "LOG",
+				"database": "youtube_da",
+				"table": "youtube_video_data_clean_regional"
+			},
+			"updateCatalogOptions": "partitions",
+			"autoDataQuality": {
+				"isEnabled": false,
+				"evaluationContext": null
+			},
+			"calculatedType": "",
+			"codeGenVersion": 2
+		},
+		"node-1729859803430": {
+			"nodeId": "node-1729859803430",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [],
+			"name": "Amazon S3",
+			"generatedNodeName": "AmazonS3_node1729859803430",
+			"classification": "DataSource",
+			"type": "S3",
+			"isCatalog": true,
+			"database": "youtube_da",
+			"table": "youtube_video_data_raw_regional",
+			"partitionPredicate": "",
+			"additionalOptions": {
+				"boundedSize": null,
+				"boundedFiles": null,
+				"boundedOption": null
+			},
+			"calculatedType": "CatalogS3DataSource",
+			"codeGenVersion": 2
+		},
+		"node-1729859886996": {
+			"nodeId": "node-1729859886996",
+			"dataPreview": false,
+			"previewAmount": 0,
+			"inputs": [
+				"node-1729859803430"
+			],
+			"name": "Change Schema",
+			"generatedNodeName": "ChangeSchema_node1729859886996",
+			"classification": "Transform",
+			"type": "ApplyMapping",
+			"mapping": [
+				{
+					"toKey": "video_id",
+					"fromPath": [
+						"video_id"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "trending_date",
+					"fromPath": [
+						"trending_date"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "title",
+					"fromPath": [
+						"title"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "channel_title",
+					"fromPath": [
+						"channel_title"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "category_id",
+					"fromPath": [
+						"category_id"
+					],
+					"toType": "bigint",
+					"fromType": "long",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "publish_time",
+					"fromPath": [
+						"publish_time"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "tags",
+					"fromPath": [
+						"tags"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "views",
+					"fromPath": [
+						"views"
+					],
+					"toType": "bigint",
+					"fromType": "long",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "likes",
+					"fromPath": [
+						"likes"
+					],
+					"toType": "bigint",
+					"fromType": "long",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "dislikes",
+					"fromPath": [
+						"dislikes"
+					],
+					"toType": "bigint",
+					"fromType": "long",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "comment_count",
+					"fromPath": [
+						"comment_count"
+					],
+					"toType": "bigint",
+					"fromType": "long",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "thumbnail_link",
+					"fromPath": [
+						"thumbnail_link"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "comments_disabled",
+					"fromPath": [
+						"comments_disabled"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "ratings_disabled",
+					"fromPath": [
+						"ratings_disabled"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "video_error_or_removed",
+					"fromPath": [
+						"video_error_or_removed"
+					],
+					"toType": "boolean",
+					"fromType": "boolean",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "description",
+					"fromPath": [
+						"description"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				},
+				{
+					"toKey": "region",
+					"fromPath": [
+						"region"
+					],
+					"toType": "string",
+					"fromType": "string",
+					"dropped": false,
+					"children": null
+				}
+			],
+			"parentsValid": true,
+			"calculatedType": "",
+			"codeGenVersion": 2
+		}
+	},
+	"hasBeenSaved": false,
+	"usageProfileName": null,
+	"script": "import sys\nfrom awsglue.transforms import *\nfrom awsglue.utils import getResolvedOptions\nfrom pyspark.context import SparkContext\nfrom awsglue.context import GlueContext\nfrom awsglue.job import Job\nfrom awsglue.dynamicframe import DynamicFrame\n\n\nargs = getResolvedOptions(sys.argv, ['JOB_NAME'])\nsc = SparkContext()\nglueContext = GlueContext(sc)\nspark = glueContext.spark_session\njob = Job(glueContext)\njob.init(args['JOB_NAME'], args)\n\npredicate_pushdown = \"region in ('CA','GB','US')\"\n# Script generated for node Amazon S3\n# datasource0 = glueContext.create_dynamic_frame.from_catalog(database = \"youtube_da\", table_name = \"youtube_video_data_raw_regional\", transformation_ctx = \"datasource0\", push_down_predicate = predicate_pushdown)\n\nAmazonS3_node1729859803430 = glueContext.create_dynamic_frame.from_catalog(database=\"raw_db\", table_name=\"regional_video_csv_data\", transformation_ctx=\"AmazonS3_node1729859803430\",\n                                                                            additional_options = {'encoding':'UTF-8'},\n                                                                            push_down_predicate = predicate_pushdown)\nprint()\n\n# Script generated for node Change Schema\nChangeSchema_node1729859886996 = ApplyMapping.apply(frame=AmazonS3_node1729859803430, mappings=[(\"video_id\", \"string\", \"video_id\", \"string\"), (\"trending_date\", \"string\", \"trending_date\", \"string\"), (\"title\", \"string\", \"title\", \"string\"), (\"channel_title\", \"string\", \"channel_title\", \"string\"), (\"category_id\", \"long\", \"category_id\", \"bigint\"), (\"publish_time\", \"string\", \"publish_time\", \"string\"), (\"tags\", \"string\", \"tags\", \"string\"), (\"views\", \"long\", \"views\", \"bigint\"), (\"likes\", \"long\", \"likes\", \"bigint\"), (\"dislikes\", \"long\", \"dislikes\", \"bigint\"), (\"comment_count\", \"long\", \"comment_count\", \"bigint\"), (\"thumbnail_link\", \"string\", \"thumbnail_link\", \"string\"), (\"comments_disabled\", \"boolean\", \"comments_disabled\", \"boolean\"), (\"ratings_disabled\", \"boolean\", \"ratings_disabled\", \"boolean\"), (\"video_error_or_removed\", \"boolean\", \"video_error_or_removed\", \"boolean\"), (\"description\", \"string\", \"description\", \"string\"), (\"region\", \"string\", \"region\", \"string\")], transformation_ctx=\"ChangeSchema_node1729859886996\")\n\ndatasink1 = ChangeSchema_node1729859886996.toDF().coalesce(1)\nprint(\"\\n\" * 3)\nprint(datasink1.printSchema())\nprint(datasink1.count())\nprint(\"\\n\" * 3)\ndf_final_output = DynamicFrame.fromDF(datasink1, glueContext, \"df_final_output\")\ndatasink4 = glueContext.write_dynamic_frame.from_options(frame = df_final_output, connection_type = \"s3\", connection_options = {\"path\": \"s3://dataset-trending-youtube-video-statistics/preprocessed_data/csv_data/\", \"partitionKeys\": [\"region\"]}, format = \"parquet\", transformation_ctx = \"datasink4\")\njob.commit()"
+}
